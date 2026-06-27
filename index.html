@@ -32,7 +32,7 @@
             overflow: hidden;
             transition: all 0.2s;
         }
-        /* ---------- AUTH HEADER (Pro) ---------- */
+        /* ---------- AUTH HEADER ---------- */
         .auth-header {
             display: flex;
             flex-wrap: wrap;
@@ -324,7 +324,7 @@
             color: #2563eb;
         }
 
-        /* ---------- AUTH MODAL (Pro) ---------- */
+        /* ---------- AUTH MODAL ---------- */
         .auth-modal {
             position: fixed;
             top: 0;
@@ -505,7 +505,7 @@
 
     <div class="app-container" id="appContainer">
 
-        <!-- ===== PRO AUTH HEADER ===== -->
+        <!-- ===== AUTH HEADER ===== -->
         <div class="auth-header">
             <div class="brand"><i class="fas fa-dumbbell"></i><span>GYM PRO</span><span style="font-weight:400;font-size:12px;background:#eef2ff;padding:2px 10px;border-radius:30px;color:#2563eb;margin-left:4px;">SaaS</span></div>
             <div class="auth-badge">
@@ -524,7 +524,7 @@
 
         <!-- ===== DASHBOARD ===== -->
         <div class="dashboard">
-            <div class="dashboard-title"><i class="fas fa-chart-pie"></i> Dashboard <span style="font-size:14px;font-weight:400;color:#64748b;margin-left:4px;">· full auth + crud</span></div>
+            <div class="dashboard-title"><i class="fas fa-chart-pie"></i> Dashboard <span style="font-size:14px;font-weight:400;color:#64748b;margin-left:4px;">· full auth + CRUD</span></div>
 
             <div class="stats-grid" id="statsGrid">
                 <div class="stat-card"><div class="stat-label"><i class="fas fa-users" style="margin-right:6px;color:#2563eb;"></i>Total Members</div><div class="stat-number" id="totalMembers">0</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
@@ -564,14 +564,14 @@
         </div>
     </div>
 
-    <!-- ===== PRO AUTH MODAL ===== -->
+    <!-- ===== AUTH MODAL ===== -->
     <div class="auth-modal" id="authModal">
         <div class="auth-card">
             <h2 id="authModalTitle">Welcome back</h2>
             <div class="sub" id="authModalSub">Login to your pro account</div>
             <div id="authFormContainer">
-                <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="coach@gym.pro" value="admin@gym.pro"></div>
-                <div class="field"><label>Password</label><input type="password" id="authPassword" placeholder="••••••••" value="admin123"></div>
+                <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="coach@gym.pro"></div>
+                <div class="field"><label>Password</label><input type="password" id="authPassword" placeholder="••••••••"></div>
                 <div id="authExtraField" class="field" style="display:none;"><label>Confirm Password</label><input type="password" id="authConfirmPassword" placeholder="••••••••"></div>
                 <div id="authError" class="error-msg"></div>
                 <div id="authSuccess" class="success-msg"></div>
@@ -586,14 +586,18 @@
 
     <script>
         (function() {
-            // ---------- STATE ----------
+            // ============================================================
+            // STATE
+            // ============================================================
             let members = [];
             let nextId = 1;
             let isLoggedIn = false;
             let currentUser = 'Guest';
             let authMode = 'login'; // 'login' | 'register' | 'reset'
 
-            // DOM refs
+            // ============================================================
+            // DOM REFS
+            // ============================================================
             const tbody = document.getElementById('membersTableBody');
             const totalMembersEl = document.getElementById('totalMembers');
             const activeMembersEl = document.getElementById('activeMembers');
@@ -604,13 +608,11 @@
             const userNameDisplay = document.getElementById('userNameDisplay');
             const proBadge = document.getElementById('proBadge');
 
-            // inputs
             const nameInput = document.getElementById('memberNameInput');
             const planSelect = document.getElementById('planSelect');
             const statusSelect = document.getElementById('statusSelect');
             const trainerInput = document.getElementById('trainerInput');
 
-            // buttons
             const addBtn = document.getElementById('addMemberBtn');
             const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
             const resetBtn = document.getElementById('resetDefaultBtn');
@@ -618,7 +620,6 @@
             const authModalBtn = document.getElementById('authModalBtn');
             const selectAllCheckbox = document.getElementById('selectAllCheckbox');
 
-            // Auth modal
             const authModal = document.getElementById('authModal');
             const authModalTitle = document.getElementById('authModalTitle');
             const authModalSub = document.getElementById('authModalSub');
@@ -635,7 +636,9 @@
             const toast = document.getElementById('toast');
             let toastTimeout;
 
-            // ---------- HELPERS ----------
+            // ============================================================
+            // TOAST
+            // ============================================================
             function showToast(msg) {
                 toast.textContent = msg || '✅';
                 toast.classList.add('show');
@@ -643,10 +646,13 @@
                 toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
             }
 
+            // ============================================================
+            // STATS
+            // ============================================================
             function updateStats() {
                 const total = members.length;
                 const active = members.filter(m => m.status === 'Active').length;
-                const revenue = total * 3500; // 3500 KSh per member
+                const revenue = total * 3500;
                 const trainers = [...new Set(members.map(m => m.trainer))].length;
                 totalMembersEl.textContent = total;
                 activeMembersEl.textContent = active;
@@ -659,7 +665,9 @@
                 proBadge.textContent = isLoggedIn ? 'PRO' : 'GUEST';
             }
 
-            // ---------- RENDER TABLE ----------
+            // ============================================================
+            // RENDER TABLE
+            // ============================================================
             function renderTable() {
                 if (!isLoggedIn) {
                     tbody.innerHTML =
@@ -678,23 +686,25 @@
                     const statusClass = m.status === 'Expired' ? 'expired' : '';
                     const planClass = m.plan.toLowerCase();
                     html += `<tr data-id="${m.id}">
-              <td><input type="checkbox" class="row-checkbox"></td>
-              <td><strong>${m.name}</strong></td>
-              <td><span class="plan-badge ${planClass}">${m.plan}</span></td>
-              <td><span class="status-badge ${statusClass}"><i class="fas fa-circle" style="font-size:8px;margin-right:6px;color:${m.status === 'Active' ? '#0b6e4f' : '#b34033'};"></i>${m.status}</span></td>
-              <td><span class="trainer-tag"><i class="fas fa-user-tie" style="margin-right:4px;"></i>${m.trainer}</span></td>
-              <td><button class="delete-btn" data-id="${m.id}"><i class="fas fa-trash-alt"></i></button></td>
-            </tr>`;
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td><strong>${m.name}</strong></td>
+                        <td><span class="plan-badge ${planClass}">${m.plan}</span></td>
+                        <td><span class="status-badge ${statusClass}"><i class="fas fa-circle" style="font-size:8px;margin-right:6px;color:${m.status === 'Active' ? '#0b6e4f' : '#b34033'};"></i>${m.status}</span></td>
+                        <td><span class="trainer-tag"><i class="fas fa-user-tie" style="margin-right:4px;"></i>${m.trainer}</span></td>
+                        <td><button class="delete-btn" data-id="${m.id}"><i class="fas fa-trash-alt"></i></button></td>
+                    </tr>`;
                 });
                 tbody.innerHTML = html;
-                // attach delete events
+
+                // Delete individual
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         const id = parseInt(this.dataset.id);
                         deleteMemberById(id);
                     });
                 });
-                // checkbox sync
+
+                // Checkbox sync
                 document.querySelectorAll('.row-checkbox').forEach(cb => {
                     cb.addEventListener('change', function() {
                         const all = document.querySelectorAll('.row-checkbox');
@@ -708,7 +718,9 @@
                 updateStats();
             }
 
-            // ---------- CRUD ----------
+            // ============================================================
+            // CRUD OPERATIONS
+            // ============================================================
             function addMember() {
                 if (!isLoggedIn) { showToast('🔒 Login required'); return; }
                 const name = nameInput.value.trim() || 'Unnamed';
@@ -739,7 +751,10 @@
                 const ids = [];
                 checkboxes.forEach(cb => {
                     const tr = cb.closest('tr');
-                    if (tr) { const id = parseInt(tr.dataset.id); if (!isNaN(id)) ids.push(id); }
+                    if (tr) {
+                        const id = parseInt(tr.dataset.id);
+                        if (!isNaN(id)) ids.push(id);
+                    }
                 });
                 if (ids.length === 0) return;
                 const count = ids.length;
@@ -761,93 +776,81 @@
                 showToast('↩️ Reset to default');
             }
 
-            // ---------- PRO AUTH (Fully Functional) ----------
-            // Store registered users (simulated database with persistence)
-            let users = [];
-            
-            // Load users from localStorage
-            function loadUsers() {
-                const stored = localStorage.getItem('gympro_users');
-                if (stored) {
-                    try {
-                        users = JSON.parse(stored);
-                        // Ensure default admin exists
-                        if (!users.find(u => u.email === 'admin@gym.pro')) {
-                            users.push({ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' });
-                        }
-                    } catch (e) {
-                        users = [{ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' }];
-                    }
-                } else {
-                    users = [{ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' }];
+            // ============================================================
+            // PRO AUTH SYSTEM (FULLY FUNCTIONAL)
+            // ============================================================
+            // User database (simulated)
+            let users = [{
+                id: 1,
+                email: 'admin@gym.pro',
+                password: 'admin123',
+                name: 'Coach Alex'
+            }];
+            let nextUserId = 2;
+            let currentSession = null;
+
+            // Session management
+            function loginUser(email, password) {
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    currentSession = { userId: user.id, email: user.email, name: user.name };
+                    isLoggedIn = true;
+                    currentUser = user.name;
+                    return true;
                 }
-                saveUsers();
-            }
-            
-            function saveUsers() {
-                localStorage.setItem('gympro_users', JSON.stringify(users));
-            }
-            
-            // Load members from localStorage
-            function loadMembers() {
-                const stored = localStorage.getItem('gympro_members');
-                if (stored) {
-                    try {
-                        members = JSON.parse(stored);
-                        // Find max id
-                        let maxId = 0;
-                        members.forEach(m => { if (m.id > maxId) maxId = m.id; });
-                        nextId = maxId + 1;
-                    } catch (e) {
-                        members = [];
-                        nextId = 1;
-                    }
-                } else {
-                    // Default members
-                    members = [
-                        { id: 1, name: 'John Kamau', plan: 'Premium', status: 'Active', trainer: 'Coach Mark' },
-                        { id: 2, name: 'Jane Wanjiru', plan: 'Basic', status: 'Expired', trainer: 'Coach Alice' },
-                        { id: 3, name: 'Paul Otieno', plan: 'Standard', status: 'Active', trainer: 'Coach Sam' },
-                        { id: 4, name: 'Lucy Mwangi', plan: 'Premium', status: 'Active', trainer: 'Coach Mike' }
-                    ];
-                    nextId = 5;
-                }
-                saveMembers();
-            }
-            
-            function saveMembers() {
-                localStorage.setItem('gympro_members', JSON.stringify(members));
-            }
-            
-            // Load auth state
-            function loadAuthState() {
-                const stored = localStorage.getItem('gympro_auth');
-                if (stored) {
-                    try {
-                        const state = JSON.parse(stored);
-                        isLoggedIn = state.isLoggedIn || false;
-                        currentUser = state.currentUser || 'Guest';
-                    } catch (e) {
-                        isLoggedIn = false;
-                        currentUser = 'Guest';
-                    }
-                } else {
-                    isLoggedIn = false;
-                    currentUser = 'Guest';
-                }
-            }
-            
-            function saveAuthState() {
-                localStorage.setItem('gympro_auth', JSON.stringify({ isLoggedIn, currentUser }));
+                return false;
             }
 
-            // ---------- AUTH FUNCTIONS ----------
+            function registerUser(email, password, name) {
+                if (users.find(u => u.email === email)) {
+                    return false;
+                }
+                const newUser = {
+                    id: nextUserId++,
+                    email: email,
+                    password: password,
+                    name: name || email.split('@')[0]
+                };
+                users.push(newUser);
+                // Auto-login after registration
+                currentSession = { userId: newUser.id, email: newUser.email, name: newUser.name };
+                isLoggedIn = true;
+                currentUser = newUser.name;
+                return true;
+            }
+
+            function logoutUser() {
+                currentSession = null;
+                isLoggedIn = false;
+                currentUser = 'Guest';
+                members = [];
+                nextId = 1;
+                renderTable();
+                updateAuthUI();
+                showToast('🔒 Logged out');
+            }
+
+            function resetPassword(email) {
+                const user = users.find(u => u.email === email);
+                if (user) {
+                    // Simulate sending reset email
+                    return true;
+                }
+                return false;
+            }
+
+            // ============================================================
+            // AUTH UI
+            // ============================================================
             function openAuthModal(mode = 'login') {
                 authMode = mode;
                 authError.style.display = 'none';
                 authSuccess.style.display = 'none';
                 authExtraField.style.display = 'none';
                 authConfirm.value = '';
+                authEmail.value = '';
+                authPassword.value = '';
+
                 if (mode === 'login') {
                     authModalTitle.textContent = 'Welcome back';
                     authModalSub.textContent = 'Login to your pro account';
@@ -867,13 +870,18 @@
                     authSwitchLink.innerHTML = `Back to <a id="authSwitchAction">Login</a>`;
                     authExtraField.style.display = 'none';
                 }
-                // re-bind switch
-                document.getElementById('authSwitchAction').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (authMode === 'login') openAuthModal('register');
-                    else if (authMode === 'register') openAuthModal('login');
-                    else if (authMode === 'reset') openAuthModal('login');
-                });
+
+                // Re-bind switch
+                const switchAction = document.getElementById('authSwitchAction');
+                if (switchAction) {
+                    switchAction.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (authMode === 'login') openAuthModal('register');
+                        else if (authMode === 'register') openAuthModal('login');
+                        else if (authMode === 'reset') openAuthModal('login');
+                    });
+                }
+
                 authModal.classList.add('active');
                 authEmail.focus();
             }
@@ -906,40 +914,25 @@
                         authError.style.display = 'block';
                         return;
                     }
-                    // Check if user already exists
-                    if (users.find(u => u.email === email)) {
+                    // Register
+                    const name = email.split('@')[0];
+                    if (registerUser(email, password, name)) {
+                        closeAuthModal();
+                        // Load default members after login
+                        resetDefault();
+                        showToast('✅ Registered & logged in as ' + currentUser);
+                        updateAuthUI();
+                    } else {
                         authError.textContent = 'Email already registered. Please login.';
                         authError.style.display = 'block';
-                        return;
                     }
-                    // Register new user
-                    const newUser = {
-                        email: email,
-                        password: password,
-                        name: email.split('@')[0] || 'NewUser'
-                    };
-                    users.push(newUser);
-                    saveUsers();
-                    // Auto-login after registration
-                    isLoggedIn = true;
-                    currentUser = newUser.name;
-                    saveAuthState();
-                    closeAuthModal();
-                    renderTable();
-                    showToast('✅ Registered & logged in as ' + currentUser);
-                    updateAuthUI();
                     return;
                 }
 
                 if (authMode === 'login') {
-                    // Find user
-                    const user = users.find(u => u.email === email && u.password === password);
-                    if (user) {
-                        isLoggedIn = true;
-                        currentUser = user.name || email.split('@')[0];
-                        saveAuthState();
+                    if (loginUser(email, password)) {
                         closeAuthModal();
-                        renderTable();
+                        resetDefault();
                         showToast('🔓 Logged in as ' + currentUser);
                         updateAuthUI();
                     } else {
@@ -950,33 +943,18 @@
                 }
 
                 if (authMode === 'reset') {
-                    const userExists = users.find(u => u.email === email);
-                    if (!userExists) {
+                    if (resetPassword(email)) {
+                        authSuccess.textContent = '✅ Password reset link sent to ' + email;
+                        authSuccess.style.display = 'block';
+                        setTimeout(() => {
+                            closeAuthModal();
+                            openAuthModal('login');
+                        }, 1500);
+                    } else {
                         authError.textContent = 'No account found with this email.';
                         authError.style.display = 'block';
-                        return;
                     }
-                    authSuccess.textContent = '✅ Password reset link sent to ' + email;
-                    authSuccess.style.display = 'block';
-                    setTimeout(() => {
-                        closeAuthModal();
-                        openAuthModal('login');
-                    }, 1500);
                 }
-            }
-
-            function logout() {
-                if (!isLoggedIn) { showToast('⚠️ Already logged out'); return; }
-                isLoggedIn = false;
-                currentUser = 'Guest';
-                saveAuthState();
-                // Clear members when logged out
-                members = [];
-                nextId = 1;
-                saveMembers();
-                renderTable();
-                updateAuthUI();
-                showToast('🔒 Logged out');
             }
 
             function updateAuthUI() {
@@ -991,49 +969,60 @@
                 }
             }
 
-            // ---------- INIT ----------
-            // Load all data
-            loadUsers();
-            loadAuthState();
-            loadMembers();
-            
-            // Render initial state
+            // ============================================================
+            // INIT
+            // ============================================================
+            // Start with empty members and logged out
+            members = [];
+            nextId = 1;
+            isLoggedIn = false;
+            currentUser = 'Guest';
             renderTable();
             updateAuthUI();
 
-            // Event listeners
+            // ============================================================
+            // EVENT LISTENERS
+            // ============================================================
             addBtn.addEventListener('click', addMember);
             deleteSelectedBtn.addEventListener('click', deleteSelected);
             resetBtn.addEventListener('click', resetDefault);
-            logoutBtn.addEventListener('click', logout);
+            logoutBtn.addEventListener('click', function() {
+                logoutUser();
+            });
             authModalBtn.addEventListener('click', () => openAuthModal('login'));
             authActionBtn.addEventListener('click', handleAuthAction);
+
             // Close on backdrop click
             authModal.addEventListener('click', function(e) {
                 if (e.target === this) closeAuthModal();
             });
+
             // Enter key on auth inputs
             authEmail.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
             authPassword.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
             authConfirm.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
 
-            // Switch from login to register via link
-            document.addEventListener('click', function(e) {
-                if (e.target.id === 'authSwitchAction') {
-                    e.preventDefault();
-                    if (authMode === 'login') openAuthModal('register');
-                    else if (authMode === 'register') openAuthModal('login');
-                    else if (authMode === 'reset') openAuthModal('login');
-                }
-            });
-
-            // Keyboard shortcut: Escape to close modal
+            // Escape to close modal
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeAuthModal();
             });
 
-            console.log('🏋️ GYM PRO · Full Auth + CRUD with persistence (Currency: KSh)');
-            console.log('👤 Demo: admin@gym.pro / admin123');
+            // Add "Forgot password?" link to login modal
+            const switchLink = document.getElementById('authSwitchLink');
+            const forgotLink = document.createElement('div');
+            forgotLink.style.marginTop = '8px';
+            forgotLink.style.textAlign = 'center';
+            forgotLink.style.fontSize = '13px';
+            forgotLink.innerHTML = `<a id="forgotPasswordLink" style="color:#2563eb;cursor:pointer;text-decoration:none;">Forgot password?</a>`;
+            switchLink.parentNode.insertBefore(forgotLink, switchLink.nextSibling);
+
+            document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                openAuthModal('reset');
+            });
+
+            console.log('🏋️ GYM PRO · Full Auth + CRUD ready (Currency: KSh)');
+            console.log('📧 Demo: admin@gym.pro / admin123');
         })();
     </script>
 </body>
