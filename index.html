@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>GYM PRO · Advanced Auth</title>
+    <title>GYM PRO · Full Auth + CRUD</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Font Inter -->
@@ -524,7 +524,7 @@
 
         <!-- ===== DASHBOARD ===== -->
         <div class="dashboard">
-            <div class="dashboard-title"><i class="fas fa-chart-pie"></i> Dashboard <span style="font-size:14px;font-weight:400;color:#64748b;margin-left:4px;">· pro auth</span></div>
+            <div class="dashboard-title"><i class="fas fa-chart-pie"></i> Dashboard <span style="font-size:14px;font-weight:400;color:#64748b;margin-left:4px;">· full auth + crud</span></div>
 
             <div class="stats-grid" id="statsGrid">
                 <div class="stat-card"><div class="stat-label"><i class="fas fa-users" style="margin-right:6px;color:#2563eb;"></i>Total Members</div><div class="stat-number" id="totalMembers">0</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
@@ -761,14 +761,87 @@
                 showToast('↩️ Reset to default');
             }
 
-            // ---------- PRO AUTH (Fixed) ----------
-            // Store registered users (simulated database)
-            let users = [{
-                email: 'admin@gym.pro',
-                password: 'admin123',
-                name: 'Coach Alex'
-            }];
+            // ---------- PRO AUTH (Fully Functional) ----------
+            // Store registered users (simulated database with persistence)
+            let users = [];
+            
+            // Load users from localStorage
+            function loadUsers() {
+                const stored = localStorage.getItem('gympro_users');
+                if (stored) {
+                    try {
+                        users = JSON.parse(stored);
+                        // Ensure default admin exists
+                        if (!users.find(u => u.email === 'admin@gym.pro')) {
+                            users.push({ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' });
+                        }
+                    } catch (e) {
+                        users = [{ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' }];
+                    }
+                } else {
+                    users = [{ email: 'admin@gym.pro', password: 'admin123', name: 'Coach Alex' }];
+                }
+                saveUsers();
+            }
+            
+            function saveUsers() {
+                localStorage.setItem('gympro_users', JSON.stringify(users));
+            }
+            
+            // Load members from localStorage
+            function loadMembers() {
+                const stored = localStorage.getItem('gympro_members');
+                if (stored) {
+                    try {
+                        members = JSON.parse(stored);
+                        // Find max id
+                        let maxId = 0;
+                        members.forEach(m => { if (m.id > maxId) maxId = m.id; });
+                        nextId = maxId + 1;
+                    } catch (e) {
+                        members = [];
+                        nextId = 1;
+                    }
+                } else {
+                    // Default members
+                    members = [
+                        { id: 1, name: 'John Kamau', plan: 'Premium', status: 'Active', trainer: 'Coach Mark' },
+                        { id: 2, name: 'Jane Wanjiru', plan: 'Basic', status: 'Expired', trainer: 'Coach Alice' },
+                        { id: 3, name: 'Paul Otieno', plan: 'Standard', status: 'Active', trainer: 'Coach Sam' },
+                        { id: 4, name: 'Lucy Mwangi', plan: 'Premium', status: 'Active', trainer: 'Coach Mike' }
+                    ];
+                    nextId = 5;
+                }
+                saveMembers();
+            }
+            
+            function saveMembers() {
+                localStorage.setItem('gympro_members', JSON.stringify(members));
+            }
+            
+            // Load auth state
+            function loadAuthState() {
+                const stored = localStorage.getItem('gympro_auth');
+                if (stored) {
+                    try {
+                        const state = JSON.parse(stored);
+                        isLoggedIn = state.isLoggedIn || false;
+                        currentUser = state.currentUser || 'Guest';
+                    } catch (e) {
+                        isLoggedIn = false;
+                        currentUser = 'Guest';
+                    }
+                } else {
+                    isLoggedIn = false;
+                    currentUser = 'Guest';
+                }
+            }
+            
+            function saveAuthState() {
+                localStorage.setItem('gympro_auth', JSON.stringify({ isLoggedIn, currentUser }));
+            }
 
+            // ---------- AUTH FUNCTIONS ----------
             function openAuthModal(mode = 'login') {
                 authMode = mode;
                 authError.style.display = 'none';
@@ -846,9 +919,11 @@
                         name: email.split('@')[0] || 'NewUser'
                     };
                     users.push(newUser);
+                    saveUsers();
                     // Auto-login after registration
                     isLoggedIn = true;
                     currentUser = newUser.name;
+                    saveAuthState();
                     closeAuthModal();
                     renderTable();
                     showToast('✅ Registered & logged in as ' + currentUser);
@@ -862,6 +937,7 @@
                     if (user) {
                         isLoggedIn = true;
                         currentUser = user.name || email.split('@')[0];
+                        saveAuthState();
                         closeAuthModal();
                         renderTable();
                         showToast('🔓 Logged in as ' + currentUser);
@@ -893,8 +969,11 @@
                 if (!isLoggedIn) { showToast('⚠️ Already logged out'); return; }
                 isLoggedIn = false;
                 currentUser = 'Guest';
+                saveAuthState();
+                // Clear members when logged out
                 members = [];
                 nextId = 1;
+                saveMembers();
                 renderTable();
                 updateAuthUI();
                 showToast('🔒 Logged out');
@@ -913,11 +992,12 @@
             }
 
             // ---------- INIT ----------
-            // Start logged out, empty members
-            members = [];
-            nextId = 1;
-            isLoggedIn = false;
-            currentUser = 'Guest';
+            // Load all data
+            loadUsers();
+            loadAuthState();
+            loadMembers();
+            
+            // Render initial state
             renderTable();
             updateAuthUI();
 
@@ -952,7 +1032,8 @@
                 if (e.key === 'Escape') closeAuthModal();
             });
 
-            console.log('🏋️ GYM PRO · Advanced Auth + CRUD ready (Currency: KSh)');
+            console.log('🏋️ GYM PRO · Full Auth + CRUD with persistence (Currency: KSh)');
+            console.log('👤 Demo: admin@gym.pro / admin123');
         })();
     </script>
 </body>
