@@ -3,20 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>GYM ADMIN · Pro SaaS</title>
-  <!-- Font Awesome 6 (free) -->
+  <title>GYM PRO · Advanced Auth</title>
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Font (Inter) -->
+  <!-- Google Font Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: #f1f5f9;
       display: flex;
       justify-content: center;
@@ -24,19 +19,16 @@
       min-height: 100vh;
       padding: 16px;
     }
-
-    /* main app card */
     .app-container {
       max-width: 1320px;
       width: 100%;
       background: #ffffff;
       border-radius: 36px;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.25);
       overflow: hidden;
       transition: all 0.2s;
     }
-
-    /* ===== PRO AUTH HEADER ===== */
+    /* ---------- AUTH HEADER (Pro) ---------- */
     .auth-header {
       display: flex;
       flex-wrap: wrap;
@@ -47,287 +39,158 @@
       border-bottom: 1px solid #eef2f6;
       gap: 12px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      color: #0b1e33;
-      letter-spacing: -0.3px;
-    }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 20px; color: #0b1e33; }
     .brand i { color: #2563eb; font-size: 22px; }
-
-    .auth-badge {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .auth-badge { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     .user-avatar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #f8fafc;
-      padding: 4px 14px 4px 8px;
-      border-radius: 40px;
-      border: 1px solid #e2e8f0;
-      cursor: default;
+      display: flex; align-items: center; gap: 8px;
+      background: #f8fafc; padding: 4px 14px 4px 8px;
+      border-radius: 40px; border: 1px solid #e2e8f0;
     }
     .user-avatar i { font-size: 18px; color: #1e293b; background: #eef2f6; padding: 6px; border-radius: 30px; }
     .user-avatar span { font-weight: 500; font-size: 14px; color: #0b1e33; }
-
     .pro-badge {
-      background: #2563eb;
-      color: white;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 12px;
-      border-radius: 40px;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
+      background: #2563eb; color: white; font-size: 11px; font-weight: 600;
+      padding: 3px 12px; border-radius: 40px; text-transform: uppercase;
     }
-
-    .auth-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-outline, .btn-primary, .btn-danger, .btn-success {
-      border: none;
-      padding: 6px 16px;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 13px;
-      cursor: pointer;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: transparent;
-      color: #1e293b;
-      border: 1px solid #d0d9e8;
+    .auth-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .btn {
+      border: none; padding: 6px 16px; border-radius: 40px; font-weight: 500;
+      font-size: 13px; cursor: pointer; transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; color: #1e293b; border: 1px solid #d0d9e8;
     }
     .btn-primary { background: #0b1e33; color: white; border: none; }
     .btn-danger { background: #dc2626; color: white; border: none; }
     .btn-success { background: #16a34a; color: white; border: none; }
+    .btn-outline { background: transparent; border: 1px solid #d0d9e8; }
     .btn-outline i, .btn-primary i, .btn-danger i, .btn-success i { font-size: 13px; }
-
     .auth-pro-tag {
-      background: #2563eb10;
-      border: 1px solid #2563eb20;
-      border-radius: 40px;
-      padding: 2px 14px 2px 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #1e4f9e;
-      font-size: 12px;
-      font-weight: 500;
+      background: #2563eb10; border: 1px solid #2563eb20;
+      border-radius: 40px; padding: 2px 14px 2px 10px;
+      display: flex; align-items: center; gap: 6px;
+      color: #1e4f9e; font-size: 12px; font-weight: 500;
     }
-
-    /* ===== DASHBOARD ===== */
-    .dashboard {
-      padding: 24px 28px 28px;
-    }
-
+    /* ---------- DASHBOARD ---------- */
+    .dashboard { padding: 24px 28px 28px; }
     .dashboard-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #0b1e33;
-      margin-bottom: 24px;
-      letter-spacing: -0.4px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      font-size: 24px; font-weight: 700; color: #0b1e33;
+      margin-bottom: 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     }
     .dashboard-title i { color: #2563eb; }
-
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 32px;
     }
-
     .stat-card {
-      background: #f9fafc;
-      border-radius: 20px;
-      padding: 16px 18px;
+      background: #f9fafc; border-radius: 20px; padding: 16px 18px;
       border: 1px solid #edf2f7;
     }
     .stat-label { font-size: 14px; font-weight: 500; color: #64748b; margin-bottom: 6px; }
-    .stat-number { font-size: 28px; font-weight: 700; color: #0b1e33; letter-spacing: -0.3px; }
-    .stat-number small { font-size: 14px; font-weight: 500; color: #3b4a5e; margin-left: 4px; }
+    .stat-number { font-size: 28px; font-weight: 700; color: #0b1e33; }
     .stat-icon { float: right; color: #2563eb; opacity: 0.6; font-size: 20px; margin-top: 2px; }
-
-    /* ----- input & control bar ----- */
     .control-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px 16px;
-      margin-bottom: 20px;
-      background: #f8fafc;
-      padding: 14px 18px;
-      border-radius: 60px;
-      border: 1px solid #e9eef4;
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 12px 16px; margin-bottom: 20px;
+      background: #f8fafc; padding: 14px 18px;
+      border-radius: 60px; border: 1px solid #e9eef4;
     }
     .control-bar .field-group {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      flex: 1 1 200px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 8px; flex: 1 1 200px;
     }
     .control-bar input, .control-bar select {
-      padding: 8px 14px;
-      border-radius: 40px;
-      border: 1px solid #d0d9e8;
-      font-size: 13px;
-      background: white;
-      flex: 1 1 120px;
-      min-width: 100px;
-      outline: none;
-      transition: 0.2s;
+      padding: 8px 14px; border-radius: 40px; border: 1px solid #d0d9e8;
+      font-size: 13px; background: white; flex: 1 1 120px;
+      min-width: 100px; outline: none;
     }
     .control-bar input:focus, .control-bar select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px #2563eb20;
+      border-color: #2563eb; box-shadow: 0 0 0 3px #2563eb20;
     }
-    .control-bar .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    /* table */
     .table-wrapper {
-      background: #ffffff;
-      border-radius: 20px;
-      border: 1px solid #eef2f6;
-      overflow-x: auto;
-      margin-bottom: 12px;
+      background: #ffffff; border-radius: 20px;
+      border: 1px solid #eef2f6; overflow-x: auto; margin-bottom: 12px;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      min-width: 480px;
-    }
-
-    th {
-      text-align: left;
-      padding: 14px 16px;
-      background: #fafcff;
-      color: #475569;
-      font-weight: 600;
-      border-bottom: 1px solid #e9eef4;
-    }
-    td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #f0f4fa;
-      color: #1e293b;
-      vertical-align: middle;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 480px; }
+    th { text-align: left; padding: 14px 16px; background: #fafcff; color: #475569; font-weight: 600; border-bottom: 1px solid #e9eef4; }
+    td { padding: 12px 16px; border-bottom: 1px solid #f0f4fa; color: #1e293b; vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
-
     .status-badge {
-      display: inline-block;
-      padding: 3px 14px;
-      border-radius: 40px;
-      font-size: 12px;
-      font-weight: 600;
-      background: #e6f7e6;
-      color: #0b6e4f;
+      display: inline-block; padding: 3px 14px; border-radius: 40px;
+      font-size: 12px; font-weight: 600; background: #e6f7e6; color: #0b6e4f;
     }
     .status-badge.expired { background: #fee9e7; color: #b34033; }
-    .trainer-tag {
-      background: #eef2f6;
-      padding: 3px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 500;
-      color: #1e293b;
-      display: inline-block;
-    }
+    .trainer-tag { background: #eef2f6; padding: 3px 12px; border-radius: 30px; font-size: 12px; font-weight: 500; color: #1e293b; display: inline-block; }
     .plan-badge { font-weight: 500; }
     .plan-badge.premium { color: #2563eb; }
     .plan-badge.standard { color: #7c3aed; }
     .plan-badge.basic { color: #64748b; }
-
-    .delete-btn {
-      background: transparent;
-      border: none;
-      color: #dc2626;
-      cursor: pointer;
-      font-size: 16px;
-      padding: 4px 8px;
-      border-radius: 30px;
-      transition: 0.2s;
-    }
+    .delete-btn { background: transparent; border: none; color: #dc2626; cursor: pointer; font-size: 16px; padding: 4px 8px; border-radius: 30px; transition: 0.2s; }
     .delete-btn:hover { background: #fee9e7; }
-
     .footer-meta {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      color: #64748b;
-      font-size: 14px;
-      border-top: 1px solid #ecf1f7;
-      padding-top: 16px;
-      gap: 8px;
+      margin-top: 16px; display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      color: #64748b; font-size: 14px;
+      border-top: 1px solid #ecf1f7; padding-top: 16px; gap: 8px;
     }
     .footer-meta i { margin-right: 6px; color: #2563eb; }
 
-    /* ===== responsive ===== */
-    @media (max-width: 1024px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    /* ---------- AUTH MODAL (Pro) ---------- */
+    .auth-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1000; opacity: 0; pointer-events: none;
+      transition: 0.3s;
     }
+    .auth-modal.active { opacity: 1; pointer-events: auto; }
+    .auth-card {
+      background: white; max-width: 420px; width: 92%;
+      border-radius: 40px; padding: 32px 28px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+      transform: scale(0.95); transition: 0.3s;
+    }
+    .auth-modal.active .auth-card { transform: scale(1); }
+    .auth-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; color: #0b1e33; }
+    .auth-card .sub { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+    .auth-card .field { margin-bottom: 16px; }
+    .auth-card label { font-weight: 500; font-size: 13px; color: #1e293b; display: block; margin-bottom: 4px; }
+    .auth-card input {
+      width: 100%; padding: 12px 16px; border-radius: 40px;
+      border: 1px solid #d0d9e8; font-size: 14px; outline: none;
+    }
+    .auth-card input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px #2563eb20; }
+    .auth-card .btn { width: 100%; justify-content: center; padding: 12px; margin-top: 8px; }
+    .auth-card .switch-link { text-align: center; margin-top: 16px; font-size: 14px; color: #475569; }
+    .auth-card .switch-link a { color: #2563eb; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .auth-card .switch-link a:hover { text-decoration: underline; }
+    .auth-card .error-msg { color: #dc2626; font-size: 13px; margin-top: 6px; display: none; }
+    .auth-card .success-msg { color: #16a34a; font-size: 13px; margin-top: 6px; display: none; }
+
+    /* responsive */
+    @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 720px) {
-      .auth-header { flex-direction: column; align-items: stretch; gap: 8px; }
+      .auth-header { flex-direction: column; align-items: stretch; }
       .auth-badge { justify-content: space-between; }
       .control-bar { flex-direction: column; align-items: stretch; border-radius: 28px; }
       .control-bar .field-group { flex: 1 1 auto; }
       .control-bar input, .control-bar select { flex: 1 1 100%; }
       .dashboard { padding: 16px; }
       .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .stat-number { font-size: 24px; }
     }
     @media (max-width: 480px) {
       .stats-grid { grid-template-columns: 1fr; }
-      .auth-actions .btn-outline, .auth-actions .btn-primary { font-size: 12px; padding: 4px 12px; }
+      .auth-actions .btn { font-size: 12px; padding: 4px 12px; }
       .user-avatar span { font-size: 12px; }
       .brand { font-size: 18px; }
       .dashboard-title { font-size: 20px; }
     }
-
-    /* toast notification */
     .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0b1e33;
-      color: white;
-      padding: 12px 28px;
-      border-radius: 60px;
-      font-weight: 500;
-      font-size: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      z-index: 999;
-      opacity: 0;
-      transition: 0.25s;
-      pointer-events: none;
-      white-space: nowrap;
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: #0b1e33; color: white; padding: 12px 28px;
+      border-radius: 60px; font-weight: 500; font-size: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 999;
+      opacity: 0; transition: 0.25s; pointer-events: none; white-space: nowrap;
     }
     .toast.show { opacity: 1; pointer-events: auto; }
   </style>
@@ -336,93 +199,93 @@
 
 <div class="app-container" id="appContainer">
 
-  <!-- PRO AUTH HEADER (with logout + login simulation) -->
+  <!-- ===== PRO AUTH HEADER ===== -->
   <div class="auth-header">
-    <div class="brand">
-      <i class="fas fa-dumbbell"></i>
-      <span>GYM ADMIN</span>
-      <span style="font-weight: 400; font-size: 12px; background: #eef2ff; padding: 2px 10px; border-radius: 30px; color: #2563eb; margin-left: 4px;">SaaS</span>
-    </div>
+    <div class="brand"><i class="fas fa-dumbbell"></i><span>GYM PRO</span><span style="font-weight:400;font-size:12px;background:#eef2ff;padding:2px 10px;border-radius:30px;color:#2563eb;margin-left:4px;">SaaS</span></div>
     <div class="auth-badge">
       <div class="user-avatar" id="userAvatar">
         <i class="fas fa-user-circle"></i>
-        <span id="userNameDisplay">Coach Alex</span>
-        <span class="pro-badge" style="background: #0b1e33;">PRO</span>
+        <span id="userNameDisplay">Guest</span>
+        <span class="pro-badge" id="proBadge" style="background:#0b1e33;">PRO</span>
       </div>
       <div class="auth-actions">
         <div class="auth-pro-tag"><i class="fas fa-shield-alt"></i> 2FA</div>
-        <button class="btn-outline" id="loginToggleBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
-        <button class="btn-primary" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="btn btn-outline" id="authModalBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+        <button class="btn btn-primary" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
       </div>
     </div>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- ===== DASHBOARD ===== -->
   <div class="dashboard">
-    <div class="dashboard-title">
-      <i class="fas fa-chart-pie"></i> Dashboard
-      <span style="font-size: 14px; font-weight: 400; color: #64748b; margin-left: 4px;">· manual data manager</span>
-    </div>
+    <div class="dashboard-title"><i class="fas fa-chart-pie"></i> Dashboard <span style="font-size:14px;font-weight:400;color:#64748b;margin-left:4px;">· pro auth</span></div>
 
-    <!-- STATS (auto-updated) -->
     <div class="stats-grid" id="statsGrid">
-      <div class="stat-card"><div class="stat-label"><i class="fas fa-users" style="margin-right: 6px; color:#2563eb;"></i>Total Members</div><div class="stat-number" id="totalMembers">120</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
-      <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check" style="margin-right: 6px; color:#2563eb;"></i>Active</div><div class="stat-number" id="activeMembers">98</div><div class="stat-icon"><i class="fas fa-running"></i></div></div>
-      <div class="stat-card"><div class="stat-label"><i class="fas fa-dollar-sign" style="margin-right: 6px; color:#2563eb;"></i>Revenue</div><div class="stat-number" id="monthlyRevenue">$3,200</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
-      <div class="stat-card"><div class="stat-label"><i class="fas fa-chalkboard-teacher" style="margin-right: 6px; color:#2563eb;"></i>Trainers</div><div class="stat-number" id="trainerCount">8</div><div class="stat-icon"><i class="fas fa-dumbbell"></i></div></div>
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-users" style="margin-right:6px;color:#2563eb;"></i>Total Members</div><div class="stat-number" id="totalMembers">0</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check" style="margin-right:6px;color:#2563eb;"></i>Active</div><div class="stat-number" id="activeMembers">0</div><div class="stat-icon"><i class="fas fa-running"></i></div></div>
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-dollar-sign" style="margin-right:6px;color:#2563eb;"></i>Revenue</div><div class="stat-number" id="monthlyRevenue">$0</div><div class="stat-icon"><i class="fas fa-arrow-up" style="color:#22a65e;"></i></div></div>
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-chalkboard-teacher" style="margin-right:6px;color:#2563eb;"></i>Trainers</div><div class="stat-number" id="trainerCount">0</div><div class="stat-icon"><i class="fas fa-dumbbell"></i></div></div>
     </div>
 
-    <!-- CONTROL BAR: input + add / delete selected -->
+    <!-- control bar -->
     <div class="control-bar">
       <div class="field-group">
         <input type="text" id="memberNameInput" placeholder="Full name" value="New Member">
         <select id="planSelect"><option value="Premium">Premium</option><option value="Standard">Standard</option><option value="Basic">Basic</option></select>
         <select id="statusSelect"><option value="Active">Active</option><option value="Expired">Expired</option></select>
-        <input type="text" id="trainerInput" placeholder="Trainer" value="Coach New">
+        <input type="text" id="trainerInput" placeholder="Trainer" value="Coach">
       </div>
       <div class="btn-group">
-        <button class="btn-success" id="addMemberBtn"><i class="fas fa-plus"></i> Add</button>
-        <button class="btn-danger" id="deleteSelectedBtn"><i class="fas fa-trash-alt"></i> Delete selected</button>
-        <button class="btn-outline" id="resetDefaultBtn"><i class="fas fa-undo"></i> Reset</button>
+        <button class="btn btn-success" id="addMemberBtn"><i class="fas fa-plus"></i> Add</button>
+        <button class="btn btn-danger" id="deleteSelectedBtn"><i class="fas fa-trash-alt"></i> Delete selected</button>
+        <button class="btn btn-outline" id="resetDefaultBtn"><i class="fas fa-undo"></i> Reset</button>
       </div>
     </div>
 
-    <!-- TABLE -->
     <div class="table-wrapper">
       <table>
         <thead><tr><th style="width:30px;"><input type="checkbox" id="selectAllCheckbox"></th><th>Name</th><th>Plan</th><th>Status</th><th>Trainer</th><th style="width:50px;">Del</th></tr></thead>
-        <tbody id="membersTableBody">
-          <!-- dynamic rows -->
-        </tbody>
+        <tbody id="membersTableBody"><tr><td colspan="6" style="text-align:center;padding:30px;color:#64748b;"><i class="fas fa-lock" style="margin-right:10px;"></i>Login to manage members</td></tr></tbody>
       </table>
     </div>
 
     <div class="footer-meta">
       <span><i class="fas fa-calendar-alt"></i> April 24, 2026</span>
       <span><i class="fas fa-clock"></i> 23:23 (EAT)</span>
-      <span><i class="fas fa-lock"></i> Pro Auth · <span id="authStatusDisplay">active</span></span>
-      <span><i class="fas fa-database"></i> <span id="rowCountDisplay">4</span> members</span>
+      <span><i class="fas fa-lock"></i> Pro Auth · <span id="authStatusDisplay">inactive</span></span>
+      <span><i class="fas fa-database"></i> <span id="rowCountDisplay">0</span> members</span>
     </div>
   </div>
 </div>
 
-<!-- toast -->
-<div id="toast" class="toast">✨ Action done</div>
+<!-- ===== PRO AUTH MODAL ===== -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-card">
+    <h2 id="authModalTitle">Welcome back</h2>
+    <div class="sub" id="authModalSub">Login to your pro account</div>
+    <div id="authFormContainer">
+      <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="coach@gym.pro" value="admin@gym.pro"></div>
+      <div class="field"><label>Password</label><input type="password" id="authPassword" placeholder="••••••••" value="admin123"></div>
+      <div id="authExtraField" class="field" style="display:none;"><label>Confirm Password</label><input type="password" id="authConfirmPassword" placeholder="••••••••"></div>
+      <div id="authError" class="error-msg"></div>
+      <div id="authSuccess" class="success-msg"></div>
+      <button class="btn btn-primary" id="authActionBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+    </div>
+    <div class="switch-link" id="authSwitchLink">Don't have an account? <a id="authSwitchAction">Register</a></div>
+    <div style="margin-top:12px;text-align:center;font-size:13px;color:#94a3b8;"><i class="fas fa-key"></i> Pro Auth · JWT + 2FA ready</div>
+  </div>
+</div>
+
+<div id="toast" class="toast">✨</div>
 
 <script>
   (function() {
-    // ---------- DATA ----------
-    let members = [
-      { id: 1, name: 'John Kamau', plan: 'Premium', status: 'Active', trainer: 'Coach Mark' },
-      { id: 2, name: 'Jane Wanjiru', plan: 'Basic', status: 'Expired', trainer: 'Coach Alice' },
-      { id: 3, name: 'Paul Otieno', plan: 'Standard', status: 'Active', trainer: 'Coach Sam' },
-      { id: 4, name: 'Lucy Mwangi', plan: 'Premium', status: 'Active', trainer: 'Coach Mike' }
-    ];
-    let nextId = 5;
-
-    // auth state
-    let isLoggedIn = true;  // start logged in
-    let currentUser = 'Coach Alex';
+    // ---------- STATE ----------
+    let members = [];
+    let nextId = 1;
+    let isLoggedIn = false;
+    let currentUser = 'Guest';
+    let authMode = 'login'; // 'login' | 'register' | 'reset'
 
     // DOM refs
     const tbody = document.getElementById('membersTableBody');
@@ -433,6 +296,7 @@
     const rowCountDisplay = document.getElementById('rowCountDisplay');
     const authStatusDisplay = document.getElementById('authStatusDisplay');
     const userNameDisplay = document.getElementById('userNameDisplay');
+    const proBadge = document.getElementById('proBadge');
 
     // inputs
     const nameInput = document.getElementById('memberNameInput');
@@ -444,26 +308,61 @@
     const addBtn = document.getElementById('addMemberBtn');
     const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
     const resetBtn = document.getElementById('resetDefaultBtn');
-    const loginToggleBtn = document.getElementById('loginToggleBtn');
     const logoutBtn = document.getElementById('logoutBtn');
+    const authModalBtn = document.getElementById('authModalBtn');
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
 
-    // toast
+    // Auth modal
+    const authModal = document.getElementById('authModal');
+    const authModalTitle = document.getElementById('authModalTitle');
+    const authModalSub = document.getElementById('authModalSub');
+    const authEmail = document.getElementById('authEmail');
+    const authPassword = document.getElementById('authPassword');
+    const authConfirm = document.getElementById('authConfirmPassword');
+    const authExtraField = document.getElementById('authExtraField');
+    const authError = document.getElementById('authError');
+    const authSuccess = document.getElementById('authSuccess');
+    const authActionBtn = document.getElementById('authActionBtn');
+    const authSwitchLink = document.getElementById('authSwitchLink');
+    const authSwitchAction = document.getElementById('authSwitchAction');
+
     const toast = document.getElementById('toast');
     let toastTimeout;
 
+    // ---------- HELPERS ----------
     function showToast(msg) {
-      toast.textContent = msg || '✅ Done';
+      toast.textContent = msg || '✅';
       toast.classList.add('show');
       clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2000);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    // ---------- RENDER ----------
+    function updateStats() {
+      const total = members.length;
+      const active = members.filter(m => m.status === 'Active').length;
+      const revenue = total * 80;
+      const trainers = [...new Set(members.map(m => m.trainer))].length;
+      totalMembersEl.textContent = total;
+      activeMembersEl.textContent = active;
+      revenueEl.textContent = `$${revenue}`;
+      trainerCountEl.textContent = trainers || 0;
+      rowCountDisplay.textContent = total;
+      authStatusDisplay.textContent = isLoggedIn ? 'active' : 'inactive';
+      userNameDisplay.textContent = isLoggedIn ? currentUser : 'Guest';
+      proBadge.style.background = isLoggedIn ? '#2563eb' : '#64748b';
+      proBadge.textContent = isLoggedIn ? 'PRO' : 'GUEST';
+    }
+
+    // ---------- RENDER TABLE ----------
     function renderTable() {
       if (!isLoggedIn) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#64748b;"><i class="fas fa-lock" style="margin-right:10px;"></i>Login to view members</td></tr>`;
-        updateStatsAndFooter();
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#64748b;"><i class="fas fa-lock" style="margin-right:10px;"></i>Login to view & manage members</td></tr>`;
+        updateStats();
+        return;
+      }
+      if (members.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#94a3b8;"><i class="fas fa-database" style="margin-right:10px;"></i>No members. Add one!</td></tr>`;
+        updateStats();
         return;
       }
       let html = '';
@@ -474,13 +373,12 @@
           <td><input type="checkbox" class="row-checkbox"></td>
           <td><strong>${m.name}</strong></td>
           <td><span class="plan-badge ${planClass}">${m.plan}</span></td>
-          <td><span class="status-badge ${statusClass}"><i class="fas fa-circle" style="font-size:8px; margin-right:6px; color:${m.status === 'Active' ? '#0b6e4f' : '#b34033'};"></i>${m.status}</span></td>
+          <td><span class="status-badge ${statusClass}"><i class="fas fa-circle" style="font-size:8px;margin-right:6px;color:${m.status === 'Active' ? '#0b6e4f' : '#b34033'};"></i>${m.status}</span></td>
           <td><span class="trainer-tag"><i class="fas fa-user-tie" style="margin-right:4px;"></i>${m.trainer}</span></td>
           <td><button class="delete-btn" data-id="${m.id}"><i class="fas fa-trash-alt"></i></button></td>
         </tr>`;
       });
       tbody.innerHTML = html;
-      updateStatsAndFooter();
       // attach delete events
       document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -488,7 +386,7 @@
           deleteMemberById(id);
         });
       });
-      // attach row checkbox events for select all sync
+      // checkbox sync
       document.querySelectorAll('.row-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
           const all = document.querySelectorAll('.row-checkbox');
@@ -496,30 +394,15 @@
           selectAllCheckbox.checked = (all.length === checked.length && all.length > 0);
         });
       });
-      // select all
       selectAllCheckbox.addEventListener('change', function() {
         document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = this.checked);
       });
-    }
-
-    function updateStatsAndFooter() {
-      const total = members.length;
-      const active = members.filter(m => m.status === 'Active').length;
-      const revenue = total * 80; // mock $80 per member
-      const trainers = [...new Set(members.map(m => m.trainer))].length;
-      totalMembersEl.textContent = total;
-      activeMembersEl.textContent = active;
-      revenueEl.textContent = `$${revenue}`;
-      trainerCountEl.textContent = trainers || 0;
-      rowCountDisplay.textContent = total;
-      // auth status
-      authStatusDisplay.textContent = isLoggedIn ? 'active' : 'inactive';
-      userNameDisplay.textContent = isLoggedIn ? currentUser : 'Guest';
+      updateStats();
     }
 
     // ---------- CRUD ----------
     function addMember() {
-      if (!isLoggedIn) { showToast('🔒 Please login first'); return; }
+      if (!isLoggedIn) { showToast('🔒 Login required'); return; }
       const name = nameInput.value.trim() || 'Unnamed';
       const plan = planSelect.value;
       const status = statusSelect.value;
@@ -548,10 +431,7 @@
       const ids = [];
       checkboxes.forEach(cb => {
         const tr = cb.closest('tr');
-        if (tr) {
-          const id = parseInt(tr.dataset.id);
-          if (!isNaN(id)) ids.push(id);
-        }
+        if (tr) { const id = parseInt(tr.dataset.id); if (!isNaN(id)) ids.push(id); }
       });
       if (ids.length === 0) return;
       const count = ids.length;
@@ -570,82 +450,173 @@
       ];
       nextId = 5;
       renderTable();
-      showToast('↩️ Reset to default data');
+      showToast('↩️ Reset to default');
     }
 
-    // ---------- AUTH ----------
-    function toggleLogin() {
-      if (isLoggedIn) {
-        // already logged in, but we can simulate re-login
-        showToast('✅ Already logged in');
+    // ---------- PRO AUTH ----------
+    function openAuthModal(mode = 'login') {
+      authMode = mode;
+      authError.style.display = 'none';
+      authSuccess.style.display = 'none';
+      authExtraField.style.display = 'none';
+      authConfirm.value = '';
+      if (mode === 'login') {
+        authModalTitle.textContent = 'Welcome back';
+        authModalSub.textContent = 'Login to your pro account';
+        authActionBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        authSwitchLink.innerHTML = `Don't have an account? <a id="authSwitchAction">Register</a>`;
+        authExtraField.style.display = 'none';
+      } else if (mode === 'register') {
+        authModalTitle.textContent = 'Create pro account';
+        authModalSub.textContent = 'Register as a gym admin';
+        authActionBtn.innerHTML = '<i class="fas fa-user-plus"></i> Register';
+        authSwitchLink.innerHTML = `Already have an account? <a id="authSwitchAction">Login</a>`;
+        authExtraField.style.display = 'block';
+      } else if (mode === 'reset') {
+        authModalTitle.textContent = 'Reset password';
+        authModalSub.textContent = 'Enter your email to reset';
+        authActionBtn.innerHTML = '<i class="fas fa-key"></i> Reset';
+        authSwitchLink.innerHTML = `Back to <a id="authSwitchAction">Login</a>`;
+        authExtraField.style.display = 'none';
+      }
+      // re-bind switch
+      document.getElementById('authSwitchAction').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (authMode === 'login') openAuthModal('register');
+        else if (authMode === 'register') openAuthModal('login');
+        else if (authMode === 'reset') openAuthModal('login');
+      });
+      authModal.classList.add('active');
+      authEmail.focus();
+    }
+
+    function closeAuthModal() {
+      authModal.classList.remove('active');
+    }
+
+    function handleAuthAction() {
+      const email = authEmail.value.trim();
+      const password = authPassword.value.trim();
+      const confirm = authConfirm.value.trim();
+      authError.style.display = 'none';
+      authSuccess.style.display = 'none';
+
+      if (!email || !password) {
+        authError.textContent = 'Email and password required.';
+        authError.style.display = 'block';
         return;
       }
-      // login
-      isLoggedIn = true;
-      currentUser = 'Coach Alex';
-      loginToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-      renderTable();
-      showToast('🔓 Logged in as ' + currentUser);
+      if (authMode === 'register' && password !== confirm) {
+        authError.textContent = 'Passwords do not match.';
+        authError.style.display = 'block';
+        return;
+      }
+      if (authMode === 'register' && password.length < 6) {
+        authError.textContent = 'Password must be at least 6 characters.';
+        authError.style.display = 'block';
+        return;
+      }
+
+      // Simulate pro auth
+      if (authMode === 'login') {
+        // hardcoded valid user for demo
+        if (email === 'admin@gym.pro' && password === 'admin123') {
+          isLoggedIn = true;
+          currentUser = 'Coach Alex';
+          closeAuthModal();
+          renderTable();
+          showToast('🔓 Logged in as ' + currentUser);
+          updateAuthUI();
+        } else {
+          authError.textContent = 'Invalid credentials. Use admin@gym.pro / admin123';
+          authError.style.display = 'block';
+        }
+      } else if (authMode === 'register') {
+        // Simulate registration
+        isLoggedIn = true;
+        currentUser = email.split('@')[0] || 'NewUser';
+        closeAuthModal();
+        renderTable();
+        showToast('✅ Registered & logged in as ' + currentUser);
+        updateAuthUI();
+      } else if (authMode === 'reset') {
+        authSuccess.textContent = '✅ Password reset link sent to ' + email;
+        authSuccess.style.display = 'block';
+        setTimeout(() => {
+          closeAuthModal();
+          openAuthModal('login');
+        }, 1500);
+      }
     }
 
     function logout() {
       if (!isLoggedIn) { showToast('⚠️ Already logged out'); return; }
       isLoggedIn = false;
       currentUser = 'Guest';
-      loginToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+      members = [];
+      nextId = 1;
       renderTable();
+      updateAuthUI();
       showToast('🔒 Logged out');
     }
 
+    function updateAuthUI() {
+      authStatusDisplay.textContent = isLoggedIn ? 'active' : 'inactive';
+      userNameDisplay.textContent = isLoggedIn ? currentUser : 'Guest';
+      proBadge.style.background = isLoggedIn ? '#2563eb' : '#64748b';
+      proBadge.textContent = isLoggedIn ? 'PRO' : 'GUEST';
+      if (!isLoggedIn) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#64748b;"><i class="fas fa-lock" style="margin-right:10px;"></i>Login to view & manage members</td></tr>`;
+        updateStats();
+      }
+    }
+
     // ---------- INIT ----------
+    // set default state: logged out, empty members
+    members = [];
+    nextId = 1;
+    isLoggedIn = false;
+    currentUser = 'Guest';
     renderTable();
+    updateAuthUI();
 
     // event listeners
     addBtn.addEventListener('click', addMember);
     deleteSelectedBtn.addEventListener('click', deleteSelected);
     resetBtn.addEventListener('click', resetDefault);
-    loginToggleBtn.addEventListener('click', toggleLogin);
     logoutBtn.addEventListener('click', logout);
+    authModalBtn.addEventListener('click', () => openAuthModal('login'));
+    authActionBtn.addEventListener('click', handleAuthAction);
+    // close on backdrop click
+    authModal.addEventListener('click', function(e) {
+      if (e.target === this) closeAuthModal();
+    });
+    // enter key on auth inputs
+    authEmail.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
+    authPassword.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
+    authConfirm.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAuthAction(); });
 
-    // quick enter on name field
-    nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMember(); });
-
-    // select all initial sync
-    selectAllCheckbox.addEventListener('change', function() {
-      document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = this.checked);
+    // switch from login to register via link
+    document.addEventListener('click', function(e) {
+      if (e.target.id === 'authSwitchAction') {
+        e.preventDefault();
+        if (authMode === 'login') openAuthModal('register');
+        else if (authMode === 'register') openAuthModal('login');
+        else if (authMode === 'reset') openAuthModal('login');
+      }
     });
 
-    // extra: click on row delete also handled via event delegation (already attached)
-    // re-attach after render
+    // keyboard shortcut: Escape to close modal    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAuthModal();
+    });
 
-    // manual override for login/logout state display
-    window.updateAuthUI = function() {
-      authStatusDisplay.textContent = isLoggedIn ? 'active' : 'inactive';
-      userNameDisplay.textContent = isLoggedIn ? currentUser : 'Guest';
-    };
-    // override render to also update auth UI
-    const originalRender = renderTable;
-    renderTable = function() {
-      originalRender();
-      authStatusDisplay.textContent = isLoggedIn ? 'active' : 'inactive';
-      userNameDisplay.textContent = isLoggedIn ? currentUser : 'Guest';
-    };
-    // re-run
-    renderTable();
+    // if logged out, show modal on first load?
+    // no, user can click login.
 
-    // ensure login toggle text
-    loginToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-    if (isLoggedIn) loginToggleBtn.innerHTML = '<i class="fas fa-user-check"></i> Logged in';
-    // but we want it to act as login toggle: if logged in, show "Login" but it does nothing? we use toggleLogin
-    // better: always show "Login" as a login button
-    loginToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-    // if logged in, we can still show login but it will say already logged in
-    // fine.
+    // auto show login modal on load for demo (optional)
+    // openAuthModal('login'); // uncomment for immediate login prompt
 
-    // add small fix: if logged in, change button text?
-    // we want a clear login/logout: login button always says login, logout logs out.
-    // but we want "Login" to work as re-login / switch user? we keep it.
-    console.log('GYM ADMIN SaaS · Pro Auth + CRUD ready');
+    console.log('🏋️ GYM PRO · Advanced Auth + CRUD ready');
   })();
 </script>
 </body>
